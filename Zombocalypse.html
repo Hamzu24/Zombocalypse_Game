@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zombocalypse</title>
+</head>
+<body>
+    <svg id="screenGraphics" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div id="shooter" class="entities gameStuff"></div>
+    <button id="playB" class="buttons menuStuff" onclick="play()">Play</button>
+    <button id="shopB" class="buttons menuStuff" onclick="shop()">Shop</button>
+    <button id="armoryB" class="buttons menuStuff" onclick="armory()">Armory</button>
+    <button id="testingB" class="buttons menuStuff" onclick="testingFloor()">Testing Floor</button>
+    <button id="challengesB" class="buttons menuStuff" onclick="challengeMenu()">Challenges</button>
+    <h1 id="challengeTitle" class="challengesStuff"><b><u>The Challenges</u></b></h1>
+    <ol id="challengesList" class="challengesStuff">
+        <pre><b>                    Challenge Name           Allowed Gun Type(s)      Status              Value</b></pre>
+        <li id="challenge1" onclick="checkChallenge(0)" class="challengeListElements"><pre>                    First Steps              All                      <span id="statusText1">Uncompleted</span>         <span id="valueText1">35</span></pre></li>
+        <li id="challenge2" onclick="checkChallenge(1)" class="challengeListElements"><pre>                    Slow And Steady          All                      <span id="statusText2">Uncompleted</span>         <span id="valueText2">40</span></pre></li>
+        <li id="challenge3" onclick="checkChallenge(2)" class="challengeListElements"><pre>                    Getting Harder           All                      <span id="statusText3">Uncompleted</span>         <span id="valueText3">50</span></pre></li>
+        <li id="challenge4" onclick="checkChallenge(3)" class="challengeListElements"><pre>                    Knife to a gun fight     Pistol                   <span id="statusText4">Uncompleted</span>         <span id="valueText4">75</span></pre></li>
+        <li id="challenge5" onclick="checkChallenge(4)" class="challengeListElements"><pre>                    Outnumbered              ARs                      <span id="statusText5">Uncompleted</span>         <span id="valueText5">100</span></pre></li>
+        <li id="challenge6" onclick="checkChallenge(5)" class="challengeListElements"><pre>                    Wrong Gun                boltAction               <span id="statusText6">Uncompleted</span>         <span id="valueText6">100</span></pre></li>
+        <li id="challenge7" onclick="checkChallenge(6)" class="challengeListElements"><pre>                    Attack of The Giants     ARs                      <span id="statusText7">Uncompleted</span>         <span id="valueText7">100</span></pre></li>
+        <li id="challenge8" onclick="checkChallenge(7)" class="challengeListElements"><pre>                    Knife to a gun fight P2  Pistol                   <span id="statusText8">Uncompleted</span>         <span id="valueText8">60</span></pre></li>
+        <li id="challenge9" onclick="checkChallenge(8)" class="challengeListElements"><pre>                    Fast & Furious           All                      <span id="statusText9">Uncompleted</span>         <span id="valueText9">175</span></pre></li>
+        <li id="challenge10" onclick="checkChallenge(9)" class="challengeListElements"><pre>                    Insanity                 All                      <span id="statusText10">Uncompleted</span>         <span id="valueText10">150</span></pre></li>
+        <li id="challenge11" onclick="checkChallenge(10)" class="challengeListElements"><pre>                    Attack of The Giants P2  ARs                      <span id="statusText11">Uncompleted</span>         <span id="valueText11">150</span></pre></li>
+        <li id="challenge12" onclick="checkChallenge(11)" class="challengeListElements"><pre>                    Stay Frosty              Shotguns                 <span id="statusText12">Uncompleted</span>         <span id="valueText12">190</span></pre></li>
+        <li id="challenge13" onclick="checkChallenge(12)" class="challengeListElements"><pre>                    ?                        M.A.D                    <span id="statusText13">Uncompleted</span>         <span id="valueText13">250</span></pre></li>
+    </ol>
+    <div id="reloadingBanner" class="gameStuff">Reloading</div>
+    <div id="waveOverBanner" class="gameStuff"><span id="waveOverTitle">Wave Complete</span><br/><span id="coinsEarnedTitle">0 Coin Bonus</span><br/>Click to continue</div>
+    <h2 id="bulletP" class="gameStuff">Bullets: 6</h2>
+    <h2 id="roundP" class="gameStuff">Round: 1</h2>
+    <h2 id="healthP" class="gameStuff">Health: 100%</h2>
+    <h2 id="equippedINGAMEP" class="gameStuff">Equipped: Pistol</h2>
+    <h2 id="secondaryP" class="gameStuff">Secondary: Pistol</h2>
+    <h1 id="shopTitle" class="shopStuff"><u><b>The Shop</b></u></h1>
+    <h3 id="coinP" class="shopStuff">Coins: 0</h3>
+    <h1 id="shopMenu" class="shopStuff"><div class="shopSelector" onclick="shopOptions('guns')">Guns</div><br/><br/><br/><div class="shopSelector" onclick="shopOptions('equipment')">Equipment</div><br/><br/><br/><div class="shopSelector" onclick="shopOptions('perks')">Perks</div><br/><br/><br/><div class="shopSelector" onclick="shopOptions('beams')">Beam Weapons</div></h1>
+    <p id="shopOptions" class="shopStuff">Click on an option to see all of the things to buy in that category</p>
+    <ul id="ownedGuns" class="armoryStuff"><h2 id="ownedGunsTitle">Owned Guns:</h2><li id="equip0"><pre>Pistol  </pre><button onclick="equip('pistol', 'guns', 0)">Equip</button></li></ul>
+    <ul id="ownedEquipment" class="armoryStuff"><h2 id="ownedEquipmentTitle">Owned Equipment:</h2></ul>
+    <ul id="ownedPerks" class="armoryStuff"><h2 id="ownedPerksTitle">Owned Perks:</h2></ul>
+    <h3 id="equippedP" class="armoryStuff"><u>Currently Equipped:</u><br/><br/>Guns: Pistol<br/>Perks:</h3>
+    <h3 id="equippedPEquipment" class="armoryStuff">Equipment: </h3>
+    <button id="toggleEquipper" class="armoryStuff" onclick="toggleEquip()">Equip: Primary</button>
+    <button id="homeB" onclick="menu()">Menu</button>
+    <input type="number" id="selectWave" class="testingStuff" value="1"/>
+    <button id="spawnWaveB" class="testingStuff" onclick="startTestingWave()">Spawn Wave</button>
+    <button id="clearScreenB" class="testingStuff" onclick="clearScreen()">Clear Screen (c)</button>
+    <select id="gunOptions" class="testingStuff">
+        <option value="0">pistol</option>
+        <option value="1">magnum</option>
+        <option value="2">uzi</option>
+        <option value="3">basicAR</option>
+        <option value="4">burstAR</option>
+        <option value="5">flamethrower</option>
+        <option value="6">widowMaker</option>
+        <option value="7">pumpAction</option>
+        <option value="8">SPAZshotgun</option>
+        <option value="9">boltAction</option>
+        <option value="10">scopedAR</option>
+        <option value="11">LKMM.Gun</option>
+        <option value="12">superShot</option>
+        <option value="13">lilUzi</option>
+        <option value="14">particleCannon</option>
+        <option value="15">M.A.D</option>
+        <option value="16">fiveCardXB</option>
+    </select>
+    <select id="zombieOptions" class="testingStuff">
+        <option value="basic">Basic</option>
+        <option value="tank">Tank</option>
+        <option value="pest">Pest</option>
+        <option value="gunner">Gunner</option>
+        <option value="rambo">Rambo</option>
+        <option value="froster">Froster</option>
+        <option value="trapper">Trapper</option>
+    </select>
+    <select id="equipmentOptions" class="testingStuff">
+        <option value="basicGrenade">basicGrenade</option>
+        <option value="longTimerGrenade">longTimerGrenade</option>
+        <option value="instantDefense">instantDefense</option>
+        <option value="trailblazer">trailblazer</option>
+        <option value="grenadeMK2">grenadeMK2</option>
+        <option value="longTimerMK2">longTimerMK2</option>
+        <option value="R.A.N.G.E">R.A.N.G.E</option>
+        <option value="ultiGrenade">ultiGrenade</option>
+    </select>
+    <button id="spawnZombieB" class="testingStuff" onclick="testingSpawnZombie()">Spawn Zombie (z)</button>
+    <img id="screenWrapper" class="menuStuff" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsites.google.com%2Fsite%2Fiogamesfree%2F_%2Frsrc%2F1499845565849%2FZombocalypse%25203.jpg&f=1&nofb=1"/>
+    <button id="retryB" class="buttons" onclick="play()">Retry</button>
+    <button id="exitB" class="buttons" onclick="menu()">Exit</button>
+    <h1 id="deathTitle">You Died!</h1>
+    <style>
+        .challengeListElements:hover {
+            color: darkred;
+        }
+        
+        #challengeTitle {
+            position: absolute;
+            color: mediumspringgreen;
+            font-size: 40px;
+            top: 1%;
+        }
+        
+        #challengesList {
+            color: crimson;
+            position: absolute;
+            top: 12%;
+            font-size: 19px;
+        }
+        
+        #coinP {
+            position: absolute;
+            left: 1%;
+            top: 2%;
+            color: crimson;
+            font-size: 20px;
+        }
+        #deathTitle {
+            position: absolute;
+            color: crimson;
+            font-size: 50px;
+            top: 25%;
+        }
+        #retryB {
+            left: 36%;
+            top: 50%;
+        }
+        #exitB {
+            left: 51%;
+            top: 50%;
+        }
+        #waveOverTitle {
+            font-size: 35px;
+        }
+        #waveOverBanner {
+            text-align: center;
+            position: absolute;
+            width: 300px;
+            height: 100px;
+            background-color: #4e45ff;
+            color: #ffa341;
+            font-size: 20px;
+            z-index: 50;
+        }
+        #equippedINGAMEP {
+            position: absolute;
+            left: 1%;
+            top: 8.5%;
+            font-size: 15px;
+            color: blue;
+        }
+        #secondaryP {
+            position: absolute;
+            left: 1%;
+            top: 10.5%;
+            font-size: 15px;
+            color: blue;
+        }
+        #bulletP {
+            position: absolute;
+            left: 1%;
+            top: 0%;
+            font-size: 15px;
+            color: blue;
+        }
+        #roundP {
+            position: absolute;
+            left: 1%;
+            top: 2.5%;
+            font-size: 15px;
+            color: blue;
+        }
+        #healthP {
+            position: absolute;
+            left: 1%;
+            top: 5%;
+            font-size: 15px;
+            color: red;
+        }
+        #zombieOptions {
+            position: absolute;
+            left: 1%;
+            top: 5%;
+            font-size: 15px;
+        }
+        #equipmentOptions {
+            position: absolute;
+            left: 1%;
+            top: 9%;
+            font-size: 15px;
+        }
+        #gunOptions {
+            position: absolute;
+            left: 1%;
+            top: 1%;
+            font-size: 15px;
+        }
+        #spawnWaveB {
+            width: 100px;
+            height: 48px;
+            position: absolute;
+            left: 90%;
+            top: 17%;
+            background-color: dimgray;
+            color: goldenrod;
+        }
+        #clearScreenB {
+            width: 100px;
+            height: 48px;
+            position: absolute;
+            left: 90%;
+            top: 25%;
+            background-color: dimgray;
+            color: goldenrod;
+        }
+        #spawnZombieB {
+            width: 100px;
+            height: 48px;
+            position: absolute;
+            left: 1%;
+            top: 15%;
+            background-color: dimgray;
+            color: goldenrod;
+        }
+        #selectWave {
+            width: 40px;
+            height: 20px;
+            position: absolute;
+            left: 92%;
+            top: 12%;
+            background-color: dimgray;
+        }
+        #toggleEquipper {
+            position: absolute;
+            left: 91%;
+            top: 94%;
+            color: saddlebrown;
+            background-color: indianred;
+        }
+        #ownedPerks {
+            position: absolute;
+            left: 32%;
+            top: 0%;
+        }
+        #ownedEquipment {
+            position: absolute;
+            left: 12%;
+            top: 0%;
+        }
+        #ownedGuns {
+            position: absolute;
+            left: 0%;
+            top: 0%;
+        }
+        #equippedP {
+            position: absolute;
+            left: 55%;
+            top: 0%;
+            color: black;
+            font-size: 19px;
+            width: 600px;
+        }
+        #equippedPEquipment {
+            position: absolute;
+            left: 55%;
+            top: 11%;
+            color: black;
+            font-size: 19px;
+            width: 600px
+        }
+        #ownedPerksTitle {
+            color: mediumaquamarine;
+        }
+        #ownedGunsTitle {
+            color: mediumorchid;
+        }
+        #ownedEquipmentTitle {
+            color: mediumpurple;
+        }
+        #homeB {
+            position: absolute;
+            left: 90%;
+            width: 100px;
+            height: 65px;
+            background-color: black;
+            color: crimson;
+            font-size: 17px;
+            z-index: 1;
+        }
+        #shopOptions {
+            color: black;
+            font-size: 18px;
+            width: 75%;
+            position: absolute;
+            left: 20%;
+            top: 15%;
+        }
+        #shopTitle {
+            font-size: 45px;
+            position: absolute;
+            color: darkcyan;
+        }
+        #shopMenu {
+            position: absolute;
+            font-size: 30px;
+            top: 14%;
+        }
+        .shopSelector {
+            color: darkgoldenrod;
+        }
+        .shopSelector:hover {
+            color: palegoldenrod;
+        }
+        #shooter {
+            position: absolute;
+            background-color: red;
+            width: 45px;
+            height: 45px;
+            border-radius: 50px;
+            z-index: 1;
+        }
+        #reloadingBanner {
+            position: absolute;
+            top: 2%;
+            background-color: crimson;
+            color: gold;
+            font-size: 28px;
+            width: 350px;
+            height: 70px;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 70px;
+            z-index: 1;
+        }
+        #screenWrapper {
+            position: absolute;
+            left: 0%;
+            top: 0%;
+            width: 100%;
+            height: 100%;
+        }
+        #screenGraphics {
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+        }
+        #playB {
+            top: 2%;
+            left: 2%;
+        }
+        #shopB {
+            top: 15%;
+            left: 2%;
+        }
+        #armoryB {
+            top: 28%;
+            left: 2%;
+        }
+        #testingB {
+            top: 41%;
+            left: 2%;
+        }
+        #challengesB {
+            top: 54%;
+            left: 2%;
+        }
+        .buttons {
+            position: absolute;
+            width: 150px;
+            height: 75px;
+            background-color: black;
+            color: crimson;
+            font-size: 17px;
+            z-index: 1;
+        }
+        
+        .buttons:hover {
+            color: darkgoldenrod;
+        }
+        
+        #homeB:hover {
+            color: darkgoldenrod;
+        }
+    </style>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
+<script>
+    //MAKE RANGE FOR GUNS USING SIMILAR SHAPES
+    
+    let character = {
+        x: ($(document).width()/2)-($('#shooter').width()/2),
+        y: ($(document).height()/2)-($('#shooter').height()/2),
+        equipped: "pistol",
+        secondaryEquipped: "pistol",
+        equippedPerks: [],
+        equippedEquipment: [],
+        reloading: false,
+        bullets: 6,
+        otherBullets: 6, //bullets in non-equipped gun
+        shooting: false,
+        health: 0,
+        hitCooldown: false,
+        money: 0,
+        speed: 4,
+        damageMultiplier: 1,
+        ROFmultiplier: 1,
+        maxHealth: 100,
+        regen: 0,
+        hitCooldownMultiplier: 1,
+        defenseMultiplier: 1,
+        accuracyMultiplier: 1,
+        bulletSize: 5,
+        switching: false,
+        element: document.getElementById("shooter") //no semicolon
+    };
+
+    const keys = {};
+    keys.LEFT = 37;
+    keys.TOP = 38;
+    keys.RIGHT = 39;
+    keys.BOTTOM = 40;
+    keys.W = 87;
+    keys.A = 65;
+    keys.S = 83;
+    keys.D = 68;
+    
+    //constants
+    const svgns = "http://www.w3.org/2000/svg";
+    const svg = document.getElementById("screenGraphics");
+    const shopIndex = ['guns', 'equipment', 'perks', 'beams'];
+    const shopInnerIndex = [['magnum', 'uzi', 'basicAR', 'SPAZshotgun', 'burstAR', 'boltAction', 'scopedAR', 'pumpAction', 'lilUzi', 'widowMaker', 'LKMM.Gun', 'flamethrower', 'superShot', 'particleCannon', 'M.A.D', 'fiveCardXB'], ['basicGrenade', 'longTimerGrenade', "instantDefense", "trailblazer", "grenadeMK2", "longTimerMK2", "R.A.N.G.E", "ultiGrenade"], ["haste", "health+", "triggerFinger", "healthRegen", "hitCooldownExtender", "thickSkinned", "hardHitting", "sabotage", "bigBullets", "hawkEye", "quicksand", "spaceTimeSynch"], ['railgun']];
+    const gunGroups = {snipers: ["boltAction", "widowMaker"], shotguns: ["pumpAction", "SPAZshotgun", "superShot", "M.A.D"], ARs: ['scopedAR', "basicAR", "burstAR", "particleCannon", "fiveCardXB"]};
+    const zombieIndex = ["basic", "tank", "pest", "gunner", "rambo", "froster", "trapper"];
+    const zombieStats = [[4, 7, 40, "lightgreen", false, [/*empty*/], true, 10, 3, "empty", "none"], [20, 5, 50, "orange", false, [/*empty*/], true, 25, 10, "empty", "none"], [4, 11, 20, "crimson", false, [/*empty*/], true, 7, 6, "empty", "none"], [15, 7, 60, "black", true, [3, 10, 8, 1, 0.75, 20], false, 15, 20, "empty", "none"], [8, 11, 30, "purple", true, [1.5, 6, 4, 2, 0.34, 50], true, 2, 15, "empty", "none"], [15, 17, 55, "#7CB9E8", true, [2.5, 9, 4, 5, 1.25, 55], false, 20, 26, ["speed", '/', '2', '1.5'], "none"], [4, 9, 40, "#801818", true, [3, 25, 7, 3, 1, 100], false, 10, 10, "empty", 8]]; // [health, speed, size, color, ifShoots, [bulletSpeed, bulletSize, bulletDamage, No.Bullets, ROF, accuracy], ifFollowPlayer, damage, value, [bulletEffectName, bulletEffectOperation, bulletEffectValue, bulletEffectDuration], bulletDuration]
+    const beamWeaponIndex = ["railgun"];
+    const beamWeaponStats = [["purple", 6, 2.5, false, 10, 0.25]];
+    //color, damage, ROF, continousDamage, width, lifespan
+    const equipmentIndex = ["basicGrenade", "longTimerGrenade", "instantDefense", "trailblazer", "grenadeMK2", "longTimerMK2", "R.A.N.G.E", "ultiGrenade"];
+    const equipmentStats = [[1.7, 15, "green", 75, 1, 15, 0, 6, 2], [2, 20, "blue", 125, 5, 20, 0, 6, 3], [1.2, 5, "red", 75, 0, 25, 0, 6, 1], [2, 15, "yellow", 30, 0, 50, 0.02, 6, 10], [1.7, 23, "darkolivegreen", 125, 1, 25, 0, 8, 3], [2.2, 20, "cornflowerblue", 150, 5, 35, 0, 7, 3], [1.3, 40, "brown", 350, 3, 100, 0, 7, 7], [2, 40, "black", 200, 0, 75, 0.01, 7, 4]]; //damage, size, color, blast radius, timer, No.Bullets, intervalBetweenBullets, bulletSize, bulletSpeed
+    const gunIndex = ['pistol', 'magnum', 'uzi', 'basicAR', 'burstAR', 'flamethrower', 'widowMaker', 'pumpAction', 'SPAZshotgun', 'boltAction', 'scopedAR', 'LKMM.Gun', 'superShot', 'lilUzi', 'particleCannon', 'M.A.D', 'fiveCardXB'];
+    const gunStats = [[35, 1.4, 2, 4, 6, 4.5, 1, 0, 350], [18, 0.7, 3.5, 2, 6, 3, 1, 0, 500], [40, 0.09, 0.43, 6, 50, 2, 1, 0, 250], [25, 0.15, 0.45, 4, 35, 3, 1, 0, 400], [10, 0.4, 0.5, 2.5, 75, 3, 3, 0.05, 500], [50, 0.01, 0.1, 1.5, 750, 3, 10, 0, 400], [0, 2.27, 7, 1, 12, 3, 3, 0.01, 2500], [50, 2, 1, 3, 75, 5, 6, 0, 200], [125, 0.9, 0.25, 3, 200, 9, 15, 0, 125], [15, 0.8, 2, 1.25, 10, 6, 1, 0, 750], [3, 0.1, 0.55, 1.7, 75, 4, 1, 0, 700], [10, 0.01, 0.2, 2, 400, 5, 1, 0, 450], [100, 1, 0.45, 4.5, 240, 7, 35, 0.001, 275], [75, 0.01, 0.19, 7, 250, 2, 1, 0, 325], [75, 2, 1.1, 3, 150, 5, 50, 0.1, 500], [250, 0.4, 1.5, 2, 75, 4, 15, 0.001, 275], [0, 0.06, 0.3, 1.4, 210, 3, 6, 0, 825]]; //[spread, ROF, damage, bullet speed, magazine size, reload speed, bullets per shot (BPS), time between BPS, range]
+    const zombieMoveIndex = ["TL", "TR", "BL", "BR"];
+    
+    let challenges = {names: ["First Steps", "Slow And Steady", "Getting Harder", "Knife to a gun fight", "Outnumbered", "Wrong gun", "Attack of The Giants", "Knife To a gun fight P2", "Fast & Furious", "Insanity", "Attack of The Giants P2", "Stay Frosty", "?"], requirements: [["group", "all"], ["group", "all"], ["group", "all"], ["gun", "pistol"], ["group", "ARs"], ["gun", "boltAction"], ["group", "ARs"], ["gun", "pistol"], ["group", "all"], ["group", "all"], ["group", "ARs"], ["group", "shotguns"], ["gun", "M.A.D"]], values: [35, 40, 50, 75, 100, 100, 100, 60, 175, 150, 150, 190, 250]};
+    
+    let inChallenge = false;
+    let universalChallengeRound = 0;
+    let universalSpecifiedRound = 0;
+    let waveEnding = false;
+    let gunRound = 0;
+    let popups = 0;
+    let convenientSide = "";
+    let chosenSide = "";
+    let selectedSides = ["", ""];
+    let round = 0;
+    let mouseOverButton = 0;
+    let spawnSpeeds = [5000, 4500, 3000, 3000, 2850, 2000, 2850, 3000, 3000, 2250, 2000, 2500, 2500, 2000, 2250, 1500, 750, 1500, 1000, 500, 750, 1250, 800];
+    let challengeSpawnSpeeds = [2000, 1750, 1500, 1000, 200, 1000, 500, 1000, 1000, 1250, 600, 750, 500, 750];
+    let zombies = [];
+    let beams = [];
+    let beamVarArray = [];
+    let equipments = [];
+    let zombieNumb = 0;
+    let bulletNumb = 0;
+    let equipmentNumb = 0;
+    let roundSP = [[4], [7], [6, 2], [8, 3, 1], [0, 0, 10], [14, 4, 1], [10, 8, 7], [1, 1, 8], [20], [3, 0, 1, 1], [0, 1, 0, 3], [8, 2, 3, 1, 1], [2, 4, 9, 1, 2], [0, 0, 10, 0, 5], [4, 0, 1, 2, 0, 1], [0, 0, 0, 0, 0, 4], [10, 10, 1], [0, 0, 5, 2, 2], [0, 0, 20, 0, 1], [0, 0, 0, 0, 0, 0, 3], [0, 0, 0, 1, 0, 3, 2], [0, 0, 4, 2, 0, 3, 4]]; //round spawn pattern
+    let referenceRoundSP = [[4], [7], [6, 2], [8, 3, 1], [0, 0, 10], [14, 4, 1], [10, 8, 7], [1, 1, 8], [20], [3, 0, 1, 1], [0, 1, 0, 3], [8, 2, 3, 1, 1], [2, 4, 9, 1, 2], [0, 0, 10, 0, 5], [4, 0, 1, 2, 0, 1], [0, 0, 0, 0, 0, 4], [10, 10, 1], [0, 0, 5, 2, 2], [0, 0, 20, 0, 1], [0, 0, 0, 0, 0, 0, 3], [0, 0, 4, 2, 0, 3, 4]]; //used to reference the spawn patterns of zombies in each round
+    let zombiesKIR = 0; //zombies killed in round
+    let challengeRoundSP = [[7], [8, 3], [6, 6], [0, 0, 0, 1], [22], [0, 0, 10], [1, 10], [0, 0, 0, 2], [0, 0, 5, 0, 5], [2, 3, 8, 4, 2], [0, 5, 0, 5], [0, 0, 0, 0, 0, 4], [0, 0, 5, 5, 0, 5]];
+    let challengeReferenceRoundSP = [[7], [8, 3], [6, 6], [0, 0, 0, 1], [22], [0, 0, 10], [1, 10], [0, 0, 0, 2], [0, 0, 5, 0, 5], [2, 3, 8, 4, 2], [0, 5, 0, 5], [0, 0, 0, 0, 0, 4], [0, 0, 5, 5, 0, 5]];
+    let random = -1;
+    let random2 = -1;
+    let random3 = -1;
+    let selectedIndex = 0;
+    let mouseX;
+    let mouseY;
+    let selectedStats = [];
+    let bullets = [];
+    let playing = false;
+    let validBullets = [];
+    let counter = 0;
+    let equipmentCounter = 0;
+    let sabotage = 1;
+    let zombieErratic = 1; //whether the zombies move erratically or not.
+    let enemySpeedMultiplier = 1;
+    let availableToBuy = [[['magnum         ', 10, 'upgraded pistol'], ['uzi            ', 35, "gangster's choice"], ['basicAR        ', 75, 'a reliable hard hitter'], ['SPAZshotgun   ', 100, "Good ol' trusty shotgun"], ['burstAR       ', 125, 'easier to control AR'], ['boltAction    ', 150, 'Good against the slow ones'], ['scopedAR      ', 175, '100% accuracy. Military performance'], ['pumpAction    ', 225, 'SWAT specialty shotgun'], ['lilUzi        ', 250, 'make your personal wall of  bullets'], ['widowMaker    ', 325, 'black market bought. Highly lethal'], ['LKMM.Gun      ', 350, "Repurposed tank-mounted MG"], ['flamethrower  ', 300, 'Overly practical'], ['superShot     ', 300, 'Futuristic and ion powered. Capabilities unknown'], ['particleCannon', 300, 'Non-stop bullets'], ['M.A.D         ', 325, "Not a Shotgun"], ['fiveCardXB    ', 350, "All you'll ever need"]], [['basicGrenade        ', 25, 'Does the job'], ['longTimerGrenade    ', 25, 'set a trap for the zombies'], ['instantDefense      ', 50, 'Use when cornered'], ["trailblazer         ", 50, "Obliterate a whole line of enemies"], ['grenadeMK2          ', 50, "Does the job better"], ['longTimerMK2        ', 50, "set a trap the zombies won't want to miss"], ['R.A.N.G.E           ', 60, "Clear the screen"], ["ultiGrenade         ", 75, "For when you have too much money"]], [["haste               ", 250, "Increases movement speed"], ["health+             ", 250, "Increases maximum health"], ["triggerFinger       ", 250, "Increases ROF"], ["healthRegen         ", 250, "Allows the regeneration of health"], ["hitCooldownExtender ", 250, "Decreases the speed at which you can take damage"], ["thickSkinned        ", 250, "Decreases the amount of damage you take"], ["hardHitting         ", 250, "Increases your damage per bullet"], ["sabotage            ", 250, "Minorly reduces all zombie stats"], ["bigBullets          ", 250, "Increases the size of your bullets"], ["hawkEye             ", 250, "Increases your accuracy"], ["quicksand           ", 250, "Decreases the movement speed of enemies"], ["spaceTimeSynch      ", 250, "Some Zombies are less erratic"]], [["railgun      ", 350, "Incinerate multiple enemies simultaneously"]]];
+    let itemCounter = 0;
+    let selectedGunPos = "primary";
+    let equipItemNumb = 1;
+    let storedVars = {gunPrimary: "pistol", gunSecondary: "pistol", grenades: ["", "", ""], round: 0};
+    let testing = false;
+    let roundNumb = 0;
+    let beamNumb = 0;
+   
+    function Random(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    
+    //code below is a function that checks if a value is in an array. Used like: "contains.call(arrayName, valueToCheckFor)"
+    var contains = function(needle) {
+    var findNaN = needle !== needle;
+    var indexOf;
+    if(!findNaN && typeof Array.prototype.indexOf === 'function') {
+        indexOf = Array.prototype.indexOf;
+    } else {
+        indexOf = function(needle) {
+            var i = -1, index = -1;
+            for(i = 0; i < this.length; i++) {
+                var item = this[i];
+                if((findNaN && item !== item) || item === needle) {
+                    index = i;
+                    break;
+                }
+            }
+            return index;
+        }
+    }
+    return indexOf.call(this, needle) > -1;
+    }
+    
+    //starting Code
+    $("#screenGraphics").css("height", ($(document).height()).toString()+"px");
+    $('#reloadingBanner').css('left', (($(document).width()/2)-($('#reloadingBanner').width()/2)).toString()+"px");
+    $('#deathTitle').css('left', (($(document).width()/2)-($('#deathTitle').width()/2)).toString()+"px");
+    $('#shopTitle').css('left', (($(document).width()/2)-($('#shopTitle').width()/2)).toString()+"px");
+    $('#waveOverBanner').css('left', (($(document).width()/2)-($('#waveOverBanner').width()/2)).toString()+"px");
+    $('#waveOverBanner').css('top', (($(document).height()/2)-($('#waveOverBanner').height()/2)).toString()+"px");
+    $("#challengeTitle").css("left", (($(document).width()/2)-($("#challengeTitle").width()/2)).toString()+"px");
+    $("#challengesList").css("left", (($(document).width()/2)-($("#challengesList").width()/2)-100).toString()+"px");
+    menu();
+
+    //Challenges Functions
+    
+    function challengeMenu() {
+        roundNumb++;
+        hideAll();
+        $(".challengesStuff").show();
+        $("#homeB").show();
+        inChallenge = false;
+        playing = false;
+        zombiesKIR = 0;
+        for (let x = 0; x < challengeReferenceRoundSP[universalChallengeRound].length; x++) {
+            challengeRoundSP[universalChallengeRound][x] = challengeReferenceRoundSP[universalChallengeRound][x];
+        }
+    }
+
+    function checkChallenge(number) { // checks your primary weapon meets the requirements of the challenge
+        if (challenges.requirements[number][0] === "group") {
+            if (contains.call(gunGroups[challenges.requirements[number][1]], character.equipped) || challenges.requirements[number][1] === "all") {
+                roundNumb++;
+                startChallenge(number, roundNumb);
+            } else {
+                alert("Your primary weapon does not meet the requirements of the level");
+            }
+        } else if (challenges.requirements[number][0] === "gun") {
+            if (character.equipped === challenges.requirements[number][1]) {
+                roundNumb++;
+                startChallenge(number, roundNumb);
+            } else {
+                alert("Your primary weapon does not meet the requirements of the level");
+            }
+        }
+    }
+    
+    function startChallenge(number, specifiedRound) {
+        inChallenge = true;
+        hideAll();
+        $('.gameStuff').fadeIn(2500);
+        $("#secondaryP").hide();
+        $("#reloadingBanner").hide();
+        $("#waveOverBanner").hide();
+        zombiesKIR = 0;
+        setTimeout(function() {
+            if (specifiedRound === roundNumb) {
+                startChallengeWave(number, specifiedRound);
+            }
+        }, 1000);
+    }
+    
+    function startChallengeWave(number, specifiedRound) {
+        if (waveEnding === false) {
+            universalChallengeRound = number;
+        }
+        random = -1;
+        random2 = 0;
+        for (let i = 0; i < challengeRoundSP[number].length; i++) {
+            random2 += challengeRoundSP[number][i];
+        }
+        if (random2 != 0) { //checks there are still zombies to spawn
+            random = Random(0, challengeRoundSP[number].length-1); //chooses a random zombie from zombies RTS;
+            while (challengeRoundSP[number][random] == 0) { //if there are no more zombies of that class to spawn
+                random = (random+1)%challengeRoundSP[number].length;
+            }
+            challengeRoundSP[number][random] -= 1; //removes that zombies from zombies RTS
+            random = zombieIndex[random]; //gets the name of the zombie type chosen
+            renderZombie(random); //adds the zombie into the game
+            setTimeout(function() {
+                if (roundNumb === specifiedRound && character.health > 0) {
+                    startChallengeWave(number, specifiedRound); //this loops until there are no more zombies to spawn
+                }
+            }, challengeSpawnSpeeds[number]);
+        } else {
+            for (let x = 0; x < challengeReferenceRoundSP[number].length; x++) {
+                challengeRoundSP[number][x] = challengeReferenceRoundSP[number][x];
+            }
+        }
+    }
+    
+    function endChallengeWave() {
+        character.health = character.maxHealth;
+        waveEnding = false;
+        $("#waveOverTitle").html("Challenge Complete");
+        character.money += challenges.values[universalChallengeRound];
+        $("#coinsEarnedTitle").html((challenges.values[universalChallengeRound]).toString()+" Coins Earned");
+        $("#statusText"+(universalChallengeRound+1).toString()).html("_Completed_");
+        $("#valueText"+(universalChallengeRound+1).toString()).html("0");
+        challenges.values[universalChallengeRound] = 0;
+        $("#waveOverBanner").fadeIn();
+    }
+    
+    //Armory Functions
+    function armory() {
+        hideAll();
+        $('.armoryStuff').show();
+        $('#homeB').show();
+        updateEquipped();
+    }
+    
+    function updateEquipped() {
+        $('#equippedP').html("<u>Currently Equipped:</u><br/><br/>Guns: "+character.equipped+", "+character.secondaryEquipped+"<br/>Perks: ");
+        for (let i = 0; i < character.equippedPerks.length; i++) {
+            if (i == 2) {
+                $('#equippedP').append(character.equippedPerks[i]);   
+            } else {
+                $('#equippedP').append((character.equippedPerks[i]).concat(", "));   
+            }
+        }
+        $('#equippedPEquipment').html("Equipment: ");
+        for (let i = 0; i < character.equippedEquipment.length; i++) {
+            if (i == 2) {
+                $('#equippedPEquipment').append(character.equippedEquipment[i]);
+            } else {
+                $('#equippedPEquipment').append((character.equippedEquipment[i]).concat(", "));
+            }
+        }
+    }
+    
+    function toggleEquip() {
+        if (selectedGunPos == "primary") {
+            selectedGunPos = 'secondary';
+            $('#toggleEquipper').html("Equip: Secondary");
+        } else {
+            selectedGunPos = 'primary';
+            $('#toggleEquipper').html("Equip: Primary");
+        }
+    }
+    
+    function equip(item, type, id) {
+        //console.log("item: "+item+", type: "+type+", id: "+id.toString()+".");
+        if (type === "guns") {
+            if (selectedGunPos == "primary") {
+                character.equipped = item;
+                character.bullets = gunStats[gunIndex.indexOf(item)][4];
+                character.reloading = false;
+            } else {
+                character.secondaryEquipped = item;
+                character.otherBullets = gunStats[gunIndex.indexOf(item)][4];
+            }
+        } else if (type === 'equipment') {
+            if (character.equippedEquipment.length >= 3) {
+                random2 = parseInt(prompt("Which piece of equipment do you want to replace? (1 to 3)"));
+                $('#ownedEquipment').append('<li id="equip'+equipItemNumb.toString()+'"><pre>'+character.equippedEquipment[random2-1]+'   </pre><button onclick="equip(\''+character.equippedEquipment[random2-1]+'\', \''+"equipment"+'\', \''+equipItemNumb+'\')">Equip</button></li>');
+                equipItemNumb += 1;
+                character.equippedEquipment.splice(random2-1, 1, item);
+            } else {
+                character.equippedEquipment.push(item);
+            }
+            $("#equip"+id.toString()).remove();
+        } else if (type === "perks") {
+            if (contains.call(character.equippedPerks, item) === false) {
+                if (character.equippedPerks.length >= 3) {
+                    random2 = parseInt(prompt("Which perk do you want to replace? (1 to 3)"));
+                    updatePerkEffects(character.equippedPerks[random2-1], -1);
+                    character.equippedPerks.splice(random2-1, 1, item);
+                } else {
+                    character.equippedPerks.push(item);
+                }
+                updatePerkEffects(item, 1);
+            } else {
+                alert("Perks cannot stack!")
+            }
+        } else if (type === "beams") {
+            if (selectedGunPos === "primary") {
+                character.equipped = item;
+            } else {
+                character.secondaryEquipped = item;
+            }
+        }
+        updateEquipped();
+    }
+    
+    //shop Functions
+    function shop() {
+        hideAll();
+        $('#homeB').show();
+        $('.shopStuff').show();
+        $("#coinP").html("Coins: "+ character.money.toString());
+    }
+    
+    function shopOptions(type) {
+        selectedStats = availableToBuy[shopIndex.indexOf(type)];
+        $('#shopOptions').html('<ul id="shopList"></ul>');
+        $('#shopOptions').css('color', 'crimson');
+        for (let i = 0; i < selectedStats.length; i++) {
+            random = selectedStats[i][0];
+            random = random.replace(/\s/g, '');
+            $('#shopList').append('<li id="buy'+itemCounter.toString()+'" onclick="buy(\''+random+'\', \''+selectedStats[i][1]+'\', \''+itemCounter+'\', \''+type+'\')"><pre>'+selectedStats[i][0]+'          '+selectedStats[i][1].toString()+'              '+selectedStats[i][2]+'</pre></li>');
+            itemCounter++;
+        }
+    }
+    
+    function buy(item, price, id, type) {
+        if (character.money >= price) {
+            let random = confirm('Are you sure you want to buy this item?');
+            if (random === true) {
+                character.money -= price;
+                $("#coinP").html("Coins: "+ character.money.toString());
+                if (type != "equipment") {
+                    $('#buy'+id.toString()).remove();
+                    availableToBuy[shopIndex.indexOf(type)].splice(shopInnerIndex[shopIndex.indexOf(type)].indexOf(item), 1);
+                    shopInnerIndex[shopIndex.indexOf(type)].splice(shopInnerIndex[shopIndex.indexOf(type)].indexOf(item), 1);
+                }
+                switch(type) {
+                    case 'guns':
+                    case 'beams':
+                        $('#ownedGuns').append('<li id="equip'+equipItemNumb.toString()+'"><pre>'+item+'   </pre><button onclick="equip(\''+item+'\', \''+type+'\', \''+"guns"+'\')">Equip</button></li>');
+                    break;
+                    case 'perks':
+                        $('#ownedPerks').append('<li id="equip'+equipItemNumb.toString()+'"><pre>'+item+'   </pre><button onclick="equip(\''+item+'\', \''+type+'\', \''+equipItemNumb+'\')">Equip</button></li>');
+                    break;
+                    case 'equipment':
+                        $('#ownedEquipment').append('<li id="equip'+equipItemNumb.toString()+'"><pre>'+item+'   </pre><button onclick="equip(\''+item+'\', \''+type+'\', \''+equipItemNumb+'\')">Equip</button></li>');
+                    break;
+                }
+                equipItemNumb += 1;
+            }
+        } else {
+            alert("Insufficient Funds");
+        }
+    }
+    
+    //Testing Floor Functions
+    
+    function testingFloor() {
+        hideAll();
+        $("#homeB").show();
+        $(".testingStuff").show();
+        storedVars.gunPrimary = character.equipped;
+        storedVars.gunSecondary = character.secondaryEquipped;
+        for (let i = 0; i < character.equippedEquipment.length; i++) {
+            storedVars.grenades[i] = character.equippedEquipment[i];
+        }
+        storedVars.round = round;
+        character.equipped = "pistol";
+        character.bullets = 6;
+        testing = true;
+        $("#shooter").show();
+    }
+    
+    function startTestingWave() {
+        startWave(false, roundNumb);
+    }
+    
+    $("#gunOptions").on("change", function() {
+        if (character.reloading === false) {
+            equip(gunIndex[parseInt(this.value)], "guns", 0);
+        } else {
+            alert("You cannot change your gun while reloading");
+        }
+    });
+    
+    $("#equipmentOptions").on("change", function() {
+        character.equippedEquipment[0] = $("#equipmentOptions").val();
+    });
+    
+    function testingSpawnZombie() {
+        renderZombie($("#zombieOptions").val());
+    }
+    
+    //Zombie Functions
+    function startWave(inGame, specifiedRound) {
+        if (inGame === true) { //if you are testing or in the game
+            zombiesKIR = 0;
+            hideAll();
+            $("#homeB").show();
+            $('.gameStuff').fadeIn(2500);
+            $("#reloadingBanner").hide();
+            $("#waveOverBanner").hide();
+            setTimeout(function() {
+                if (specifiedRound === roundNumb && playing === true) {
+                    spawnZombies(roundNumb);
+                }
+            }, 2000);
+        } else {
+            round = document.getElementById("selectWave").value;
+            for (let x = 0; x < referenceRoundSP[round-1].length; x++) { //spawns all the zombies
+                for (let i = 0; i < referenceRoundSP[round-1][x]; i++) {
+                    renderZombie(zombieIndex[x]);
+                }
+            }
+            for (let i = 0; i < referenceRoundSP[round-1].length; i++) { //fills the roundSP array again
+                roundSP[round-1][i] = referenceRoundSP[round-1][i];
+            }
+        }
+    }
+   
+    function spawnZombies(specifiedRound) {
+        if (waveEnding === false) {
+            universalSpecifiedRound = specifiedRound;
+        }
+        random = -1;
+        random2 = 0;
+        for (let i = 0; i < roundSP[round].length; i++) {
+            random2 += roundSP[round][i];
+        }
+        if (random2 != 0) { //checks there are still zombies to spawn
+            random = Random(0, roundSP[round].length-1); //chooses a random zombie from zombies RTS;
+            while (roundSP[round][random] == 0) { //if there are no more zombies of that class to spawn
+                random = (random+1)%roundSP[round].length;
+            }
+            roundSP[round][random] -= 1; //removes that zombies from zombies RTS
+            random = zombieIndex[random]; //gets the name of the zombie type chosen
+            renderZombie(random); //adds the zombie into the game
+            setTimeout(function() {
+                if (roundNumb === specifiedRound && character.health > 0) {
+                    spawnZombies(specifiedRound); //this loops until there are no more zombies to spawn
+                }
+            }, spawnSpeeds[round]);
+        } else {
+            for (let x = 0; x < referenceRoundSP[round].length; x++) {
+                roundSP[round][x] = referenceRoundSP[round][x];
+            }
+        }
+    }
+    
+    function renderZombie(type) {
+        selectedIndex = zombieIndex.indexOf(type);
+        zombies.push({name: ("zombie").concat(zombieNumb.toString()), type: type, health: zombieStats[selectedIndex][0]*sabotage, speed: (zombieStats[selectedIndex][1]+Random(zombieStats[selectedIndex][1]/4*-1, zombieStats[selectedIndex][1]/4))*sabotage*enemySpeedMultiplier, posEqual: [false, false], followPlayer: zombieStats[zombieIndex.indexOf(type)][6], damage: (zombieStats[selectedIndex][7])*sabotage});
+        if (zombies[zombieNumb].followPlayer === false) {
+            zombies[zombieNumb].moveStats = [zombieMoveIndex[Random(0, 3)], Random(15, 45), Random(2, 5)]; //direction, numberOfMoves, speed
+        }
+        $('body').append("<div id='zombie"+zombieNumb.toString()+"' class='zombies entities'></div>");
+        $("#zombie"+zombieNumb.toString()).css("width", (zombieStats[selectedIndex][2]).toString()+"px");
+        $("#zombie"+zombieNumb.toString()).css("height", (zombieStats[selectedIndex][2]).toString()+"px");
+        $("#zombie"+zombieNumb.toString()).css("background-color", zombieStats[selectedIndex][3]);
+        $("#zombie"+zombieNumb.toString()).css('position', 'absolute');
+        $("#zombie"+zombieNumb.toString()).css("border-radius", "50px");
+        random = Random(0, $(document).width()-zombieStats[selectedIndex][2]);
+        random2 = Random(0, $(document).height()-zombieStats[selectedIndex][2]);
+        while (random > character.x-100 && random < character.x+150 && random2 > character.y-100 && random2 < character.y+150) { //100px padding
+            random = Random(0, $(document).width()-zombieStats[selectedIndex][2]);
+            random2 = Random(0, $(document).height()-zombieStats[selectedIndex][2]);
+        }
+        if (zombieStats[selectedIndex][4] === true) {
+            zombieShoot(zombieNumb, type);
+        }
+        $("#zombie"+zombieNumb.toString()).css("left", random.toString()+"px");
+        $("#zombie"+zombieNumb.toString()).css("top", random2.toString()+"px");
+        zombieNumb += 1;
+    }
+    
+    setInterval(function() {
+        
+        for (let i = 0; i < zombieNumb; i++) {
+            if (zombies[i].health > 0) {
+                for (j = 0; j < bulletNumb; j++) {
+                    if (bullets[j].validity == true) {
+                        selectedStats = [parseInt(($('#bullet'+j.toString()).css('left')).substring(0, ($('#bullet'+j.toString()).css('left')).length-2)), parseInt(($('#zombie'+i.toString()).css('left')).substring(0, ($('#zombie'+i.toString()).css('left')).length-2)), parseInt(($('#bullet'+j.toString()).css('top')).substring(0, ($('#bullet'+j.toString()).css('top')).length-2)), parseInt(($('#zombie'+i.toString()).css('top')).substring(0, ($('#zombie'+i.toString()).css('top')).length-2))];
+                        if (bullets[j].type === "friendly") {
+                            if (selectedStats[0] > selectedStats[1] && selectedStats[0] < selectedStats[1] + zombieStats[zombieIndex.indexOf(zombies[i].type)][2]) {
+                                if (selectedStats[2] > selectedStats[3] && selectedStats[2] < selectedStats[3] + zombieStats[zombieIndex.indexOf(zombies[i].type)][2]) {
+                                    $('#bullet'+j.toString()).stop();
+                                    $('#bullet'+j.toString()).css('left', '0px');
+                                    $('#bullet'+j.toString()).css('top', '0px');
+                                    bullets[j].validity = false;
+                                    $('#bullet'+j.toString()).hide();
+                                    zombies[i].health -= (bullets[j].damage*character.damageMultiplier);
+                                }
+                            }
+                        } else {
+                            if (selectedStats[0] > character.x && selectedStats[0] < character.x+45) {
+                                if (selectedStats[2] > character.y && selectedStats[2] < character.y+45) {
+                                    if (character.hitCooldown === false) {
+                                        $("#bullets"+j.toString()).hide();
+                                        bullets[j].validity = false;
+                                        hit(bullets[j].damage, false, zombieStats[zombieIndex.indexOf(zombies[i].type)][9]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (testing === false && zombies[i].health <= 0) {
+                    $('#zombie'+i.toString()).fadeOut(100);
+                    zombiesKIR += 1;
+                    random = 0;
+                    if (testing === false && (playing === true || inChallenge === true)) {
+                        character.money += zombieStats[zombieIndex.indexOf(zombies[i].type)][8];
+                        createCoinPopup(zombieStats[zombieIndex.indexOf(zombies[i].type)][8], selectedStats[1], selectedStats[3], popups);
+                    }
+                    if (playing === true) {
+                        for (let i = 0; i < referenceRoundSP[round].length; i++) {
+                            random = random + referenceRoundSP[round][i];
+                        }
+                        if (zombiesKIR === random) {
+                            waveEnding = true;
+                            setTimeout(function() {
+                                endWave();
+                            }, 2000);
+                        }
+                    } else if (inChallenge === true) {
+                        for (let i = 0; i < challengeReferenceRoundSP[universalChallengeRound].length; i++) {
+                            random = random + challengeReferenceRoundSP[universalChallengeRound][i];
+                        }
+                        if (zombiesKIR === random) {
+                            setTimeout(function() {
+                                waveEnding = true;
+                                endChallengeWave();
+                            }, 2000);
+                        }
+                    }
+                } else if (testing === true && zombies[i].health <= 0) {
+                    $('#zombie'+i.toString()).fadeOut(100);
+                }
+//                for (let j = 0; j < beamNumb; j++) {
+//                    //beams.push({name: "beam"+beamNumb.toString(), type: type, damage: statArray[1], validity: true, friendly: true, hit: [], continousDamage: statArray[3], originArray: originArray, targetArray: targetArray, notRotated: [false, false], biggerValues: [], smallerValues: []});
+//                    if (beams[beamNumb].validity === true) {
+////                        if (selectedStats[1]+zombieStats[zombieIndex.indexOf(zombies[i].type)][2] > beams[beamNumb].smallerValues[0] && selectedStats[1] > beams[beamNumb].biggerValues[0] && selectedStats[3]+zombieStats[zombieIndex.indexOf(zombies[i].type)][2] > beams[beamNumb].smallerValues[1] && selectedStats[3] > beams[beamNumb].biggerValues[1]) {
+////                            if (beams[beamNumb].biggerValues[0] > selectedStats[1]+zombieStats[zombieIndex.indexOf(zombies[i].type)][2] && beams[beamNumb].smallerValues[0] < selectedStats[1]) {
+////                                selectedSides[0] = "Both";
+////                            } else if (beams[beamNumb].biggerValues[0] > selectedStats[1]+zombieStats[zombieIndex.indexOf(zombies[i].type)][2]) {
+////                                selectedSides[0] = "Right";
+////                            } else if (beams[beamNumb].smallerValues[0] < selectedStats[1]) {
+////                                selectedSides[0] = "Left";
+////                            } else {
+////                                selectedSides[0] = "None";
+////                            }
+////
+////                            if (beams[beamNumb].biggerValues[1] > selectedStats[3]+zombieStats[zombieIndex.indexOf(zombies[i].type)][2] && beams[beamNumb].smallerValues[1] < selectedStats[3]) {
+////                                selectedSides[1] = "Both";
+////                            } else if (beams[beamNumb].biggerValues[1] > selectedStats[3]+zombieStats[zombieIndex.indexOf(zombies[i].type)][2]) {
+////                                selectedSides[1] = "Bottom";
+////                            } else if (beams[beamNumb].smallerValues[1] < selectedStats[3]) {
+////                                selectedSides[1] = "Top";
+////                            } else {
+////                                selectedSides[1] = "None";
+////                            }
+////
+////                            if ((beams[beamNumb].targetArray[0] < beams[beamNumb].originArray[0] && beams[beamNumb].targetArray[1] < beams[beamNumb].originArray[1]) || (beams[beamNumb].targetArray[0] > beams[beamNumb].originArray[0] && beams[beamNumb].targetArray[1] > beams[beamNumb].originArray[1])) {
+////                                if (selectedSides[1] === "Both" || selectedSides[1] === "Bottom")
+////                            }
+////                        }
+//                    }
+//                }
+            }
+        }
+    }, 25);
+    
+    function createCoinPopup(amount, locationX, locationY, specifiedPopups) {
+        $("body").append("<h3 id='popup"+specifiedPopups+"' class='popups'>+"+amount.toString()+" Coins!</h3>");  
+        popups++;
+        $("#popup"+specifiedPopups.toString()).css("position", "absolute");
+        $("#popup"+specifiedPopups.toString()).css("left", locationX.toString()+"px");
+        $("#popup"+specifiedPopups.toString()).css("top", locationY.toString()+"px");
+        $("#popup"+specifiedPopups.toString()).css("color", "crimson");
+        setTimeout(function() {
+            $("#popup"+specifiedPopups.toString()).fadeOut(2000);
+        }, 1000);
+    }
+    
+    setInterval(function() {
+        //code below checks if the zombie and player are touching
+        
+        for (let i = 0; i < zombies.length; i++) {
+            if (zombies[i].health > 0) {
+                selectedStats = [parseInt(($('#zombie'+i.toString()).css('left')).substring(0, ($('#zombie'+i.toString()).css('left')).length-2)), parseInt(($('#zombie'+i.toString()).css('top')).substring(0, ($('#zombie'+i.toString()).css('top')).length-2))];
+                if ((character.x+45 > selectedStats[0] && character.x+45 < selectedStats[0]+$("#zombie"+i.toString()).width()) || (character.x > selectedStats[0] && character.x < selectedStats[0]+$("#zombie"+i.toString()).width())) {
+                    if ((character.y+45 > selectedStats[1] && character.y+45 < selectedStats[1]+$("#zombie"+i.toString()).height()) || (character.y > selectedStats[1] && character.y < selectedStats[1]+$("#zombie"+i.toString()).height())) {
+
+                        if (character.hitCooldown === false) {
+                            hit(zombieStats[zombieIndex.indexOf(zombies[i].type)][7], true, "Empty");
+                        }
+
+                    }
+                }
+            }
+        }
+        
+        //code below checks if player is dead
+        if (character.health <= 0 && (playing === true || inChallenge === true)) {
+            character.hitCooldown = true;
+            character.health = 0;
+            $("#healthP").html("Health: 0%");
+            if (playing === true) {
+                playing = false;
+                death();
+            } else if (inChallenge === true) {
+                inChallenge = false;
+                challengeDeath();
+            }
+        }
+        
+    }, 100);
+    
+    setInterval(function() {
+        //zombie movement code
+        for (let i = 0; i < zombieNumb; i++) {
+            if (zombies[i].health > 0) {
+                selectedStats = [parseInt(($('#zombie'+i.toString()).css('left')).substring(0, ($('#zombie'+i.toString()).css('left')).length-2)), parseInt(($('#zombie'+i.toString()).css('top')).substring(0, ($('#zombie'+i.toString()).css('top')).length-2))];
+                if (zombies[i].followPlayer === true) {
+                    if ((selectedStats[0] > character.x-zombieStats[zombieIndex.indexOf(zombies[i].type)][2]+20 && selectedStats[0] < character.x+25) || (selectedStats[0]+zombieStats[zombieIndex.indexOf(zombies[i].type)][2] > character.x+20 && selectedStats[0]+zombieStats[zombieIndex.indexOf(zombies[i].type)][2] < character.x+25+zombieStats[zombieIndex.indexOf(zombies[i].type)][2])) {
+                        zombies[i].posEqual[0] = true;
+                    } else {
+                        zombies[i].posEqual[0] = false;
+                    }
+                    if ((selectedStats[1] > character.y-zombieStats[zombieIndex.indexOf(zombies[i].type)][2]+10 && selectedStats[1] < character.y+35) || (selectedStats[1]+zombieStats[zombieIndex.indexOf(zombies[i].type)][2] > character.y+10 && selectedStats[1]+zombieStats[zombieIndex.indexOf(zombies[i].type)][2] < character.y+45)) {
+                        zombies[i].posEqual[1] = true;
+                    } else {
+                        zombies[i].posEqual[1] = false;
+                    }
+                    if (zombieErratic === 1) { //deciding whether the zombies will move smoothly or erratically
+                        random2 = [Random(zombies[i].speed/2*-1, zombies[i].speed/2), Random(zombies[i].speed/2*-1, zombies[i].speed/2)];
+                    } else {
+                        random2 = [0, 0];
+                    }
+                    if (character.x > selectedStats[0] && character.y > selectedStats[1]) {
+                        if (zombies[i].posEqual[0] == false && zombies[i].posEqual[1] == false) {
+                            $('#zombie'+i.toString()).offset({left: selectedStats[0]+((zombies[i].speed/2)+random2[0]), top: selectedStats[1]+((zombies[i].speed/2)+random2[1])});
+                        } else if (zombies[i].posEqual[0] == true && zombies[i].posEqual[1] == false) {
+                            $('#zombie'+i.toString()).offset({left: selectedStats[0]+random2[0], top: selectedStats[1]+zombies[i].speed/2});
+                        } else if (zombies[i].posEqual[0] == false && zombies[i].posEqual[1] == true) {
+                            $('#zombie'+i.toString()).offset({left: selectedStats[0]+zombies[i].speed/2, top: selectedStats[1]+random2[1]});
+                        }
+                    } else if (character.x > selectedStats[0]) {
+                        if (zombies[i].posEqual[0] == false && zombies[i].posEqual[1] == false) {
+                            $('#zombie'+i.toString()).offset({left: selectedStats[0]+((zombies[i].speed/2)+random2[0]), top: selectedStats[1]-((zombies[i].speed/2)+random2[1])});
+                        } else if (zombies[i].posEqual[0] == true && zombies[i].posEqual[1] == false) {
+                            $('#zombie'+i.toString()).offset({left: selectedStats[0]+random2[0], top: selectedStats[1]-zombies[i].speed/2});
+                        } else if (zombies[i].posEqual[0] == false && zombies[i].posEqual[1] == true) {
+                            $('#zombie'+i.toString()).offset({left: selectedStats[0]+zombies[i].speed/2, top: selectedStats[1]+random2[1]});
+                        }
+                    } else if (character.y > selectedStats[1]) {
+                        if (zombies[i].posEqual[0] == false && zombies[i].posEqual[1] == false) {
+                            $('#zombie'+i.toString()).offset({left: selectedStats[0]-((zombies[i].speed/2)+random2[0]), top: selectedStats[1]+(zombies[i].speed/2)+random2[1]});
+                        } else if (zombies[i].posEqual[0] == true && zombies[i].posEqual[1] == false) {
+                            $('#zombie'+i.toString()).offset({left: selectedStats[0]+random2[0], top: selectedStats[1]+zombies[i].speed/2});
+                        } else if (zombies[i].posEqual[0] == false && zombies[i].posEqual[1] == true) {
+                            $('#zombie'+i.toString()).offset({left: selectedStats[0]-zombies[i].speed/2, top: selectedStats[1]+random2[1]});
+                        }
+                    } else {
+                        if (zombies[i].posEqual[0] == false && zombies[i].posEqual[1] == false) {
+                            $('#zombie'+i.toString()).offset({left: (selectedStats[0]-zombies[i].speed/2)+random2[0], top: selectedStats[1]-(zombies[i].speed/2)+random2[1]});
+                        } else if (zombies[i].posEqual[0] == true && zombies[i].posEqual[1] == false) {
+                            $('#zombie'+i.toString()).offset({left: selectedStats[0]+random2[0], top: selectedStats[1]-zombies[i].speed/2});
+                        } else if (zombies[i].posEqual[0] == false && zombies[i].posEqual[1] == true) {
+                            $('#zombie'+i.toString()).offset({left: selectedStats[0]-zombies[i].speed/2, top: selectedStats[1]+random2[1]});
+                        }
+                    }
+                } else {
+                    checkZombieMovement(selectedStats, i);
+                }
+            }
+        }
+    }, 50);
+    
+    function checkZombieMovement(stats, id) { //movement code for zombies that don't follow the player
+        if (zombies[id].moveStats[1] > 0) {
+            if (stats[1] > 5) {
+                if (stats[0]+zombieStats[zombieIndex.indexOf(zombies[id].type)][2] < $(document).width()-5) {
+                    if (stats[1]+zombieStats[zombieIndex.indexOf(zombies[id].type)][2] < $(document).height()-25) {
+                        if (stats[0] > 5) {
+                            moveZombie(stats, id);
+                        } else {
+                            random = Random(1, 2);
+                            zombies[id].moveStats[0] = zombieMoveIndex[(random*2)-1];
+                            resetZombieMovement(stats, id, false);
+                        }
+                    } else {
+                        zombies[id].moveStats[0] = zombieMoveIndex[Random(0, 1)];
+                        resetZombieMovement(stats, id, false);
+                    }
+                } else {
+                    zombies[id].moveStats[0] = zombieMoveIndex[Random(0, 1)*2];
+                    resetZombieMovement(stats, id, false);
+                }
+            } else {
+                zombies[id].moveStats[0] = zombieMoveIndex[Random(2, 3)];
+                resetZombieMovement(stats, id, false);
+            }
+        } else {
+            resetZombieMovement(stats, id, true);
+        }
+    }
+    
+    function resetZombieMovement(stats, id, randomDirection) {
+        if (randomDirection === true) {
+            zombies[id].moveStats[0] = zombieMoveIndex[Random(0, 3)];
+        }
+        zombies[id].moveStats[1] = Random(15, 45);
+        zombies[id].moveStats[2] = Random(2, 5);
+        moveZombie(stats, id);
+    }
+    
+    function moveZombie(stats, id) {
+        if (zombies[id].moveStats[0] === "BR") {
+            $("#zombie"+id.toString()).offset({left: stats[0]+zombies[id].moveStats[2], top: stats[1]+zombies[id].moveStats[2]});
+        } else if (zombies[id].moveStats[0] === "BL") {
+            $("#zombie"+id.toString()).offset({left: stats[0]-zombies[id].moveStats[2], top: stats[1]+zombies[id].moveStats[2]});
+        } else if (zombies[id].moveStats[0] === "TR") {
+            $("#zombie"+id.toString()).offset({left: stats[0]+zombies[id].moveStats[2], top: stats[1]-zombies[id].moveStats[2]});
+        } else if (zombies[id].moveStats[0] === "TL") {
+            $("#zombie"+id.toString()).offset({left: stats[0]-zombies[id].moveStats[2], top: stats[1]-zombies[id].moveStats[2]});
+        }
+        zombies[id].moveStats[1] -= 1;
+    }
+    
+    function zombieShoot(id, type) {
+        selectedStats = [parseInt(($("#zombie"+id.toString()).css("left")).substring(0, $("#zombie"+id.toString()).css("left").length-2)), parseInt(($("#zombie"+id.toString()).css("top")).substring(0, $("#zombie"+id.toString()).css("top").length-2))]; 
+        for (let x = 0; x < zombieStats[zombieIndex.indexOf(type)][5][3]; x++) {
+            renderZombieBullet(id, type, bulletNumb, selectedStats);
+            bulletNumb++;
+        }
+        setTimeout(function() {
+            if (zombies[id].health > 0) {
+                zombieShoot(id, type);
+            }
+        }, (zombieStats[zombieIndex.indexOf(type)][5][4]*1000));
+    }
+    
+    function renderZombieBullet(id, type, specificBulletNumb, stats) {
+        $('body').append('<div id="bullet'+specificBulletNumb.toString()+'" class="bullets particles"></div>');
+        $('#bullet'+specificBulletNumb.toString()).css('position', 'absolute');
+        if (type != "froster") {
+            $('#bullet'+specificBulletNumb.toString()).css('background-color', 'maroon');
+        } else {
+            $('#bullet'+specificBulletNumb.toString()).css('background-color', '#6D9BC3');
+        }
+        $('#bullet'+specificBulletNumb.toString()).css('width', zombieStats[zombieIndex.indexOf(type)][5][1].toString()+"px");
+        $('#bullet'+specificBulletNumb.toString()).css('height', zombieStats[zombieIndex.indexOf(type)][5][1].toString()+"px");
+        $('#bullet'+specificBulletNumb.toString()).css('border-radius', '25px');
+        $('#bullet'+specificBulletNumb.toString()).css('left', (stats[0]+(zombieStats[zombieIndex.indexOf(type)][2]/2)).toString()+'px');
+        $('#bullet'+specificBulletNumb.toString()).css('top', (stats[1]+(zombieStats[zombieIndex.indexOf(type)][2]/2)).toString()+'px');
+        random2 = [Random(zombieStats[zombieIndex.indexOf(type)][5][5]*-1, zombieStats[zombieIndex.indexOf(type)][5][5]), Random(zombieStats[zombieIndex.indexOf(type)][5][5]*-1, zombieStats[zombieIndex.indexOf(type)][5][5])];
+        //random2 is the accuracy mutator for the bullet that is being fired
+        random = Math.sqrt(Math.pow(((stats[0]+(zombieStats[zombieIndex.indexOf(type)][2]/2)-character.x)+random2[0]), 2)+Math.pow(((selectedStats[1]+(zombieStats[zombieIndex.indexOf(type)][2]/2)-character.y)+random2[1]), 2));
+        bullets.push({name: ("bullet").concat(specificBulletNumb.toString()), damage: zombieStats[zombieIndex.indexOf(type)][5][2], validity: true, type: "enemy", duration: zombieStats[zombieIndex.indexOf(zombies[id.toString()].type)][10]});
+        $('#bullet'+specificBulletNumb.toString()).animate({left: "-="+((stats[0]+(zombieStats[zombieIndex.indexOf(type)][2]/2)-character.x+22)+random2[0]-41).toString()+"px", top: "-="+((stats[1]+(zombieStats[zombieIndex.indexOf(type)][2]/2)-character.y+22)+random2[1]-41).toString()+"px"}, random*zombieStats[zombieIndex.indexOf(type)][5][0], "linear", function() {
+            if (bullets[parseInt(this.getAttribute('id').substring(6, this.getAttribute('id').length))].duration == "none") {
+                $('#'+this.getAttribute('id')).hide();
+                bullets[parseInt(this.getAttribute('id').substring(6, this.getAttribute('id').length))].validity = false;
+            } else {
+                setTimeout(function() {
+                    $('#bullet'+specificBulletNumb.toString()).hide();
+                    bullets[specificBulletNumb].validity = false;
+                }, bullets[specificBulletNumb].duration*1000);
+            }
+        });
+    }
+    
+    //shooting Functions
+    function shoot() {
+        character.reloading = true;
+        counter = 0;
+        if (contains.call(gunIndex, character.equipped) === true) {
+            selectedStats = gunStats[gunIndex.indexOf(character.equipped)];
+            shootLoop(selectedStats);
+        } else {
+            selectedStats = beamWeaponStats[beamWeaponIndex.indexOf(character.equipped)];
+            random = [character.x+22, character.y+22];
+            random2 = [mouseX, mouseY-105];
+            shootBeam("line", random, random2, selectedStats, beamNumb);
+            setTimeout(function() {
+                if (character.shooting === true) {
+                    shoot();
+                } else {
+                    character.reloading = false;
+                }
+            }, selectedStats[2]*1000*character.ROFmultiplier);
+        }
+    }
+    
+    function shootLoop(stats) {
+        if (character.bullets > 0) {
+            $('body').append('<div id="bullet'+bulletNumb.toString()+'" class="bullets particles"></div>');
+            $('#bullet'+bulletNumb.toString()).css('position', 'absolute');
+            $('#bullet'+bulletNumb.toString()).css('background-color', 'darkgoldenrod');
+            $('#bullet'+bulletNumb.toString()).css('width', character.bulletSize.toString()+'px');
+            $('#bullet'+bulletNumb.toString()).css('height', character.bulletSize.toString()+'px');
+            $('#bullet'+bulletNumb.toString()).css('border-radius', '25px');
+            $('#bullet'+bulletNumb.toString()).css('left', (character.x+15).toString()+'px');
+            $('#bullet'+bulletNumb.toString()).css('top', (character.y+15).toString()+'px');
+            random2 = [Random(stats[0]*-1*character.accuracyMultiplier, stats[0]*character.accuracyMultiplier), Random(stats[0]*-1*character.accuracyMultiplier, stats[0]*character.accuracyMultiplier)]; // random2 = [x spread, y spread] -- the spread mutator of your bullets
+            
+            random = [character.x+22-mouseX+random2[0], character.y+22-(mouseY-105)+random2[1], Math.sqrt(Math.pow((character.x+22-mouseX+random2[0]), 2)+Math.pow((character.y+22-(mouseY-105)+random2[1]), 2))]; // random = [x distance, y distance, distance the bullet travels to reach the target] -- it is all basically one big triangle
+            
+            if (random[2] > stats[8]) {
+                random3 = random[2]/stats[8]; //random3 is the SF between the two similar triangles
+                random = [random[0]/random3, random[1]/random3, stats[8]]; // these are the modified random values to account for the gun's max range
+            }
+            
+            bullets.push({name: ("bullet").concat(bulletNumb.toString()), damage: stats[2], validity: true, type: "friendly"});
+            $('#bullet'+bulletNumb.toString()).animate({left: "-="+(random[0].toString())+"px", top: "-="+(random[1].toString())+"px"}, random[2]*stats[3], "linear", function() {
+                $('#'+this.getAttribute('id')).hide();
+                bullets[parseInt(this.getAttribute('id').substring(6, this.getAttribute('id').length))].validity = false;
+            });
+            
+            bulletNumb += 1;
+            character.bullets -= 1;
+            $("#bulletP").html("Bullets: "+character.bullets.toString());
+            counter += 1;
+            if (counter < stats[6]) {
+                setTimeout(function() {
+                    shootLoop(stats);
+                }, stats[7]*1000);
+            } else {
+                endShoot(stats, gunRound);
+            }
+        } else {
+            if (testing === false && (playing === true || inChallenge === true)) {
+                endShoot(stats, gunRound);
+            } else if (testing === true) {
+                character.bullets = gunStats[gunIndex.indexOf(character.equipped)][4];
+                shootLoop(stats);
+            }
+        }
+    }
+    
+    function endShoot(stats, specifiedGunRound) {
+        if (character.bullets <= 0 && testing === false) {
+            character.shooting = false;
+            reload(stats[5], stats[4], gunRound);
+        } else {
+            setTimeout(function() {
+                if (specifiedGunRound === gunRound) {
+                    character.reloading = false;
+                    if (character.shooting === true) {
+                        shoot();
+                    }
+                }
+            }, stats[1]*1000*character.ROFmultiplier);
+        }
+    }
+    
+    function useEquipment(item) {
+        selectedStats = equipmentStats[equipmentIndex.indexOf(item)];
+        equipments.push({validity: true, name: "equipment"+equipmentNumb.toString(), type: item}); //validity is false if the bomb has exploded
+        $("body").append("<div id='equipment"+equipmentNumb.toString()+"'></div>");
+        $("#equipment"+equipmentNumb.toString()).css('position', "absolute");
+        $("#equipment"+equipmentNumb.toString()).css('left', character.x.toString()+"px");
+        $("#equipment"+equipmentNumb.toString()).css('top', character.y.toString()+"px");
+        $("#equipment"+equipmentNumb.toString()).css('width', selectedStats[1].toString()+"px");
+        $("#equipment"+equipmentNumb.toString()).css('height', selectedStats[1].toString()+"px");
+        $("#equipment"+equipmentNumb.toString()).css('border-radius', "30px");
+        $("#equipment"+equipmentNumb.toString()).css('background-color', selectedStats[2]);
+        random = (character.x+22)-mouseX //+22 is to account for the width of the character
+        random2 = (character.y+22)-(mouseY-102) //+22 is to account for the height of the character
+        $("#equipment"+equipmentNumb.toString()).animate({left: "-="+random.toString()+"px", top: "-="+random2.toString()+"px"}, Math.sqrt(Math.pow(random, 2)+Math.pow(random2, 2))*3, "linear");
+        startExplode(selectedStats, equipmentNumb);
+        equipmentNumb++;
+    }
+    
+    function startExplode(stats, id) {
+        setTimeout(function() {
+            equipments[id].validity = false;
+            $("#equipment"+id.toString()).css('background-color', 'red');
+            setTimeout(function() {
+                equipmentCounter = 0;
+                explode(stats, id);
+                manageExplosion(stats, id);
+            }, 400);
+        }, stats[4]*1000);
+    }
+    
+    function manageExplosion(stats, id) {
+        equipmentCounter++;
+        if (stats[5] >= equipmentCounter) {
+            setTimeout(function() {
+                explode(stats, id);
+                manageExplosion(stats, id);
+            }, stats[6]*1000);
+        } else {
+            $("#equipment"+id.toString()).hide();
+        }
+    }
+    
+    function explode(stats, id) {
+        $('body').append('<div id="bullet'+bulletNumb.toString()+'" class="bullets particles"></div>');
+        $("#bullet"+bulletNumb.toString()).show();
+        $('#bullet'+bulletNumb.toString()).css('position', 'absolute');
+        $('#bullet'+bulletNumb.toString()).css('background-color', 'darkgoldenrod');
+        $('#bullet'+bulletNumb.toString()).css('width', stats[7].toString()+'px');
+        $('#bullet'+bulletNumb.toString()).css('height', stats[7].toString()+'px');
+        $('#bullet'+bulletNumb.toString()).css('border-radius', '25px');
+        $('#bullet'+bulletNumb.toString()).css('left', $("#equipment"+id.toString()).css("left"));
+        $('#bullet'+bulletNumb.toString()).css('top', $("#equipment"+id.toString()).css("top"));
+        bullets.push({name: ("bullet").concat(bulletNumb.toString()), damage: stats[0], validity: true, type: "friendly"});
+        if (Random(1, 2) === 1) {
+            if (Random(1, 2) === 1) {
+                random = stats[3]*-1;
+            } else {
+                random = stats[3];
+            }
+            random2 = Random(stats[3]*-1, stats[3]);
+        } else {
+            random = Random(stats[3]*-1, stats[3]);
+            if (Random(1, 2) === 1) {
+                random2 = stats[3];
+            } else {
+                random2 = stats[3]*-1;
+            }
+        }
+        random3 = [parseInt(($("#equipment"+id.toString()).css("left")).substring(0, $("#equipment"+id.toString()).css("left").length-2)), parseInt(($("#equipment"+id.toString()).css("top")).substring(0, $("#equipment"+id.toString()).css("top").length-2))];
+        $("#bullet"+bulletNumb.toString()).animate({left: "-="+random.toString(), top: "-="+random2.toString()}, (Math.sqrt(Math.pow(Math.abs(random-random3[0]), 2)+Math.pow(Math.abs(random2-random3[1]), 2))/7.5)*stats[8], "linear", function() {
+            $("#"+this.getAttribute("id")).hide();
+            bullets[parseInt(this.getAttribute('id').substring(6, this.getAttribute('id').length))].validity = false;
+        });
+        bulletNumb += 1;
+    }
+
+    function reload(reloadSpeed, magSize, specifiedGunRound) {
+        if ((playing === true || inChallenge === true) && character.health > 0) {
+            $("#bulletP").html("Bullets: 0");
+            setTimeout(function() {
+                $('#reloadingBanner').show();
+            }, 250);
+            setTimeout(function() {
+                if (gunRound === specifiedGunRound) {
+                    character.bullets = magSize;
+                    character.reloading = false;
+                    $("#bulletP").html("Bullets: "+character.bullets.toString());
+                    $('#reloadingBanner').hide();
+                }
+            }, reloadSpeed*1000);
+        } else if (testing === true) {
+            character.bullets = magSize;
+            character.reloading = false;
+            $("#bulletP").html("Bullets: "+character.bullets.toString());
+            $('#reloadingBanner').hide();   
+        }
+    }
+
+    $(document).on('mousedown', function() {
+        if (character.reloading === false && mouseOverButton === 0 && (playing === true || testing === true || inChallenge === true) && character.health > 0 && character.switching === false) {
+            shoot();
+            character.shooting = true; //shooting is used to continually click when the mouse is held down
+        }
+    });
+    
+    $(document).on('mouseup', function() {
+        character.shooting = false;   
+    });
+    
+    function shootBeam(type, originArray, targetArray, statArray, specificBeamNumber) {
+        let gradient = 0;
+        let biggerValues = [];
+        let smallerValues = [];
+        if (type === "line") {
+            beams.push({name: "beam"+beamNumb.toString(), type: type, damage: statArray[1], validity: true, friendly: true, hit: [], continousDamage: statArray[3], originArray: originArray, targetArray: targetArray, notRotated: [false, false], biggerValues: [], smallerValues: []});
+            beamVarArray.push(document.createElementNS(svgns, "line")); 
+            beamVarArray[beamNumb].setAttributeNS(null, "x1", originArray[0]);
+            beamVarArray[beamNumb].setAttributeNS(null, "y1", originArray[1]);
+            beamVarArray[beamNumb].setAttributeNS(null, "x2", targetArray[0]);
+            beamVarArray[beamNumb].setAttributeNS(null, "y2", targetArray[1]);
+            beamVarArray[beamNumb].setAttributeNS(null, "stroke", statArray[0]);
+            beamVarArray[beamNumb].setAttributeNS(null, "fill", statArray[0]);
+            beamVarArray[beamNumb].setAttributeNS(null, "id", "beam"+beamNumb.toString());
+            beamVarArray[beamNumb].setAttributeNS(null, "class", "beams");
+            beamVarArray[beamNumb].setAttributeNS(null, "stroke-width", statArray[4]);
+            gradient = (targetArray[0]-originArray[0])/(targetArray[1]-originArray[1]);
+            beams[beamNumb].gradient = Math.abs(gradient);
+            if (targetArray[0] != originArray[0]) {
+                biggerValues[0] = targetArray[0] > originArray[0]? targetArray[0]: originArray[0];
+                smallerValues[0] = targetArray[0] > originArray[0]? originArray[0]: targetArray[0];
+            } else {
+                beams[beamNumb].notRotated[0] = true;
+            }
+            
+            if (targetArray[1] != originArray[1]) {
+                biggerValues[1] = targetArray[1] > originArray[1]? targetArray[1]: originArray[1];
+                smallerValues[1] = targetArray[1] > originArray[1]? originArray[1]: targetArray[1];
+            } else {
+                beams[beamNumb].notRotated[1] = true;
+            }
+            
+            beams[beamNumb].biggerValues = biggerValues;
+            beams[beamNumb].smallerValues = smallerValues;
+            
+            svg.appendChild(beamVarArray[beamNumb]);
+            setTimeout(function() {
+                document.getElementById("beam"+specificBeamNumber.toString()).style.visibility = "hidden";
+                beams[specificBeamNumber].validity = false;
+            }, statArray[5]*1000);
+        } else if (type === "circle") {
+            //implement this for splash damage???
+        }
+        beamNumb += 1;
+    }
+    
+    //misc Functions
+    
+    function hit(damage, fromZombie, bulletEffects) {
+        if (playing === true || inChallenge === true || testing === true) {
+            if (character.hitCooldown === false) {
+                if (fromZombie === true) {
+                    //below is the code needed when the shooter touches a zombie
+                    if (testing != true) {
+                        character.health = character.health - Math.round(damage*character.defenseMultiplier);
+                        $("#healthP").html("Health: "+character.health.toString()+"%");
+                    }
+                    character.hitCooldown = true;
+                    $("#shooter").css("background-color", "gray");
+                    setTimeout(function() {
+                        character.hitCooldown = false;
+                        $("#shooter").css("background-color", "red");
+                    }, 1500*character.hitCooldownMultiplier);
+                } else {
+                    //below is the code needed when the shooter is hit by a bullet
+                    if (testing != true) {
+                        character.health = character.health - Math.round(damage*character.defenseMultiplier);
+                        $("#healthP").html("Health: "+character.health.toString()+"%");
+                    }
+                    character.hitCooldown = true;
+                    if (bulletEffects != "Empty") {
+                        implementBulletEffect(bulletEffects);
+                    }
+                    setTimeout(function() {
+                        character.hitCooldown = false;
+                    }, 500);
+                }
+            }
+        }
+    }
+    
+    function implementBulletEffect(bulletEffects) {
+        if (bulletEffects[1] === "/") {
+            character[bulletEffects[0]] /= bulletEffects[2];
+        } else if (bulletEffects[1] === "*") {
+            character[bulletEffects[0]] *= bulletEffects[2];
+        }
+        setTimeout(function() {
+            if (bulletEffects[1] === "/") {
+                character[bulletEffects[0]] *= bulletEffects[2];
+            } else if (bulletEffects[1] === "*") {
+                character[bulletEffects[0]] /= bulletEffects[2];
+            }
+        }, bulletEffects[3]*1000);
+    }
+    
+    function endWave() {
+        waveEnding = false;
+        if (universalSpecifiedRound === roundNumb) {
+            let coinsEarned = 0;
+            let random = 0;
+            $("#waveOverTitle").html("Wave "+(round+1).toString()+" Complete");
+            for (let i = 0; i < referenceRoundSP[round].length; i++) {
+                random += referenceRoundSP[round][i];
+            }
+            coinsEarned = (round+1)*random+Random(0, 18);
+            character.money += coinsEarned;
+            $("#coinsEarnedTitle").html(coinsEarned.toString()+" Coin Bonus");
+            $("#waveOverBanner").fadeIn();
+        }
+    }
+    
+    $("#waveOverBanner").on("click", function() {
+        if (playing === true) {
+            let specifiedRound = roundNumb;
+            round += 1;
+            fillHealth(character.maxHealth);
+            $("#roundP").html("Round: "+(round+1).toString());
+            zombiesKIR = 0;
+            $("#waveOverBanner").fadeOut();
+            setTimeout(function() {
+                if (playing === true && roundNumb === specifiedRound) {
+                    spawnZombies(roundNumb);
+                }
+            }, 3000);
+        } else if (inChallenge === true) {
+            challengeMenu();
+        }
+    });
+    
+    function menu() {
+        character.switching = false;
+        $("#screenWrapper").attr("src", "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fsites.google.com%2Fsite%2Fiogamesfree%2F_%2Frsrc%2F1499845565849%2FZombocalypse%25203.jpg&f=1&nofb=1");
+        $("#waveOverBanner").hide();
+        if (selectedGunPos === "secondary") {
+            toggleEquip();
+        }
+        inChallenge = false;
+        playing = false;
+        roundNumb++;
+        zombiesKIR = 0;
+        if (testing === false) {
+            for (let x = 0; x < referenceRoundSP[round].length; x++) {
+                roundSP[round][x] = referenceRoundSP[round][x];
+            }
+        } else {
+            character.equipped = storedVars.gunPrimary;
+            character.secondaryEquipped = storedVars.gunSecondary;
+            for (let i = 0; i < storedVars.grenades.length; i++) {
+                if (storedVars.grenades[i] != "") {
+                    character.equippedEquipment[i] = storedVars.grenades[i];
+                }
+            }
+            round = storedVars.round;
+        }
+        if (contains.call(gunIndex, character.equipped) === true) {
+            character.bullets = gunStats[gunIndex.indexOf(character.equipped)][4];
+            character.otherBullets = gunStats[gunIndex.indexOf(character.secondaryEquipped)][4];
+        }
+        fillHealth(character.maxHealth);
+        testing = false;
+        resetShooterPosition();
+        hideAll();
+        $('.menuStuff').show();
+    }
+    
+    function resetShooterPosition() {
+        character.x = ($(document).width()/2)-($('#shooter').width()/2);
+        character.y = ($(document).height()/2)-($('#shooter').height()/2);
+        $("#shooter").css("left", (($(document).width()/2)-($('#shooter').width()/2)).toString()+"px");
+        $("#shooter").css("top", (($(document).height()/2)-($('#shooter').height()/2)).toString()+"px");
+    }
+    
+    function play() {
+        fillHealth(character.maxHealth);
+        character.hitCooldown = false;
+        $("#equippedINGAMEP").html("Equipped: "+character.equipped);
+        $("#secondaryP").html("Secondary: "+character.secondaryEquipped);
+        $("#bulletP").html("Bullets: "+character.bullets.toString());
+        resetShooterPosition();
+        playing = true;
+        startWave(true, roundNumb);
+    }
+    
+    function hideAll() {
+        $("#deathTitle").hide();
+        $("#retryB").hide();
+        $("#exitB").hide();
+        $(".armoryStuff").hide();
+        $(".gameStuff").hide();
+        $(".shopStuff").hide();
+        $(".menuStuff").hide();
+        $(".testingStuff").hide();
+        $(".challengesStuff").hide();
+        $("#homeB").hide();
+        for (let i = 0; i < bullets.length; i++) {
+            bullets[i].validity = false;
+            $("#bullet"+i.toString()).hide();
+        }
+        for (let i = 0; i < zombies.length; i++) { //hides all the zombies from the screen
+            zombies[i].health = 0;
+            $("#zombie"+i.toString()).hide();
+        }
+        $(".popups").hide();
+    }
+    
+    function clearScreen() {
+        for (let i = 0; i < zombies.length; i++) { //hides all the zombies from the screen
+            zombies[i].health = 0;
+            $("#zombie"+i.toString()).hide();
+        }
+    }
+    
+    function fillHealth(amount) {
+        character.health = amount;
+        $("#healthP").html("Health: "+amount.toString()+"%");
+    }
+    
+    $("#homeB").mouseenter(function() {
+        mouseOverButton += 1;   
+    });
+    $("#homeB").mouseleave(function() {
+       mouseOverButton -= 1; 
+    });
+    $("#gunOptions").mouseenter(function() {
+        mouseOverButton += 1;   
+    });
+    $("#gunOptions").mouseleave(function() {
+       mouseOverButton -= 1; 
+    });
+    $("#zombieOptions").mouseenter(function() {
+        mouseOverButton += 1;   
+    });
+    $("#zombieOptions").mouseleave(function() {
+       mouseOverButton -= 1; 
+    });
+    $("#spawnZombieB").mouseenter(function() {
+        mouseOverButton += 1;   
+    });
+    $("#spawnZombieB").mouseleave(function() {
+       mouseOverButton -= 1; 
+    });
+    $("#spawnWaveB").mouseenter(function() {
+        mouseOverButton += 1;   
+    });
+    $("#spawnWaveB").mouseleave(function() {
+       mouseOverButton -= 1; 
+    });
+    $("#selectWave").mouseenter(function() {
+        mouseOverButton += 1;   
+    });
+    $("#selectWave").mouseleave(function() {
+       mouseOverButton -= 1; 
+    });
+    $("#clearScreenB").mouseenter(function() {
+        mouseOverButton += 1;   
+    });
+    $("#clearScreenB").mouseleave(function() {
+       mouseOverButton -= 1; 
+    });
+    $("#waveOverBanner").mouseenter(function() {
+        mouseOverButton += 1;   
+    });
+    $("#waveOverBanner").mouseleave(function() {
+       mouseOverButton -= 1; 
+    });
+    
+    $(document).keydown(function(e) {
+        key = e.keyCode;
+        switch(key) {
+            case 82: //r (reload)
+                if (character.reloading === false && character.switching === false) {
+                    character.reloading = true;
+                    selectedStats = gunStats[gunIndex.indexOf(character.equipped)];
+                    reload(selectedStats[5], selectedStats[4], gunRound);   
+                }
+            break;
+            case 81 || 16: //Q or SHIFT (switch weapon -- primary/secondary)
+                if (inChallenge === false) {
+                    gunRound++;
+                    character.shooting = false;
+                    character.switching = true;
+                    if (character.reloading === true) {
+                        $('#reloadingBanner').hide();
+                    }
+                    character.reloading = false;
+                    character.shooting = false;
+                    setTimeout(function() {
+                        character.switching = false;
+                        if (playing === true) {
+                            random = character.otherBullets;
+                            character.otherBullets = character.bullets;
+                            character.bullets = random;
+                            $("#bulletP").html("Bullets: "+character.bullets.toString());
+                            random = character.equipped;
+                            character.equipped = character.secondaryEquipped;
+                            $("#equippedINGAMEP").html("Equipped: "+character.equipped);
+                            character.secondaryEquipped = random;
+                            $("#secondaryP").html("Secondary: "+character.secondaryEquipped);
+                        } else if (testing === true) {
+                            alert("You can only equip one gun on the testing floor");
+                        }
+                    }, 1000);
+                } else if (inChallenge === true) {
+                    alert("You cannot switch guns in a challenge");
+                }
+            break;
+            case 49: //1 (grenade)
+                if (character.equippedEquipment.length > 0 && (playing === true || testing === true || inChallenge === true)) {
+                    useEquipment(character.equippedEquipment[0]);
+                    if (testing === false) {
+                        character.equippedEquipment.splice(0, 1);   
+                    }
+                }
+            break;
+            case 50: //2 (grenade)
+                if (character.equippedEquipment.length > 1 && testing === false && (playing === true || inChallenge === true)) {
+                    useEquipment(character.equippedEquipment[1]);
+                    character.equippedEquipment.splice(1, 1);
+                }
+            break;
+            case 51: //3 (grenade)
+                if (character.equippedEquipment.length > 2 && testing === false && (playing === true || inChallenge === true)) {
+                    useEquipment(character.equippedEquipment[2]);
+                    character.equippedEquipment.splice(1, 1);
+                }
+            break;
+            case 90: //z (spawn zombie)
+                if (testing === true) {
+                    testingSpawnZombie();
+                }
+            break;
+            case 67: //c (clear screen)
+                if (testing === true) {
+                    clearScreen();
+                }
+            break;
+            case 80: //p (secret-- gives you 50,000,000 cash)
+                character.money += 100;
+                $("#coinP").html("Coins: "+ character.money.toString());
+            break;
+        }
+    });
+
+    /// key detection
+    document.body.onkeyup =
+    document.body.onkeydown = function(e){
+        var kc = e.keyCode || e.which;
+        keys[kc] = e.type == 'keydown';
+    };
+
+    /// character movement update
+    var moveCharacter = function(dx, dy){
+        character.x += dx||0;
+        character.y += dy||0;
+        character.element.style.left = character.x + 'px';
+        character.element.style.top = character.y + 'px';
+    };
+
+    /// character control
+    var detectCharacterMovement = function(){
+        if (keys[keys.LEFT] || keys[keys.A]) {
+            if (character.x > 0) {
+                moveCharacter(character.speed*-1);
+            }
+        }
+        if (keys[keys.RIGHT] || keys[keys.D]) {
+            if (character.x < $(document).width()-70) {
+                moveCharacter(character.speed);
+            }
+        }
+        if (keys[keys.TOP] || keys[keys.W]) {
+            if (character.y > 6) {
+                moveCharacter(0, character.speed*-1);
+            }
+        }
+        if (keys[keys.BOTTOM] || keys[keys.S]) {
+            if (character.y < $(document).height()-70) {
+                moveCharacter(0, character.speed);
+            }
+        }
+    }
+    
+    setInterval(function(){
+        detectCharacterMovement();
+    }, 25);
+   
+    function findScreenCoords(mouseEvent) {
+        mouseX = mouseEvent.screenX;
+        mouseY = mouseEvent.screenY;
+    }
+    document.onmousemove = findScreenCoords;
+    
+    setInterval(function() {
+        if ($('#reloadingBanner').html().length == 12) {
+            $('#reloadingBanner').html('Reloading');
+        } else {
+            $('#reloadingBanner').html($('#reloadingBanner').html()+'.');
+        }
+    }, 1000);
+    
+    setInterval(function() {
+        if (playing === true && character.health < character.maxHealth && character.health > 0) {
+            fillHealth(character.health+character.regen);
+        }
+    }, 1750);
+    
+    function death() {
+        hideAll();
+        for (let x = 0; x < referenceRoundSP[round].length; x++) {
+            roundSP[round][x] = referenceRoundSP[round][x];
+        }
+        setTimeout(function() {
+            $("#screenWrapper").fadeIn();
+            $("#retryB").show();
+            $("#exitB").show();
+            $("#deathTitle").show();
+        }, 1000);
+    }
+    
+    function challengeDeath() {
+        hideAll();
+        $("#screenWrapper").attr("src", "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fi.imgur.com%2FJFZlcde.png&f=1&nofb=1");
+        for (let x = 0; x < challengeReferenceRoundSP[universalChallengeRound].length; x++) {
+            challengeRoundSP[universalChallengeRound][x] = challengeReferenceRoundSP[universalChallengeRound][x];
+        }
+        setTimeout(function() {
+            $("#screenWrapper").fadeIn();
+            $("#exitB").show();
+            $("#deathTitle").show();
+        }, 1000);
+    }
+    
+    function updatePerkEffects(item, direction) {
+        switch(item) {
+            case "haste":
+                character.speed += (2*direction);
+            break;
+            case "hardHitting":
+                character.damageMultiplier += (0.5*direction);
+            break;
+            case "triggerFinger":
+                character.ROFmultiplier -= (0.5*direction);
+            break;
+            case "health+":
+                character.maxHealth += (50*direction);
+            break;
+            case "healthRegen":
+                character.regen += direction;
+            break;
+            case "hitCooldownExtender":
+                character.hitCooldownMultiplier += (direction*1.2);
+            break;
+            case "thickSkinned":
+                character.defenseMultiplier -= (direction/3)
+            break;
+            case "sabotage":
+                sabotage += (direction/4);
+            break;
+            case "bigBullets":
+                character.bulletSize += (direction*5);
+            break;
+            case "hawkEye":
+                character.accuracyMultiplier -= direction/1.75;
+            break;
+            case "quicksand":
+                enemySpeedMultiplier -= direction/3.5;
+            break;
+            case "spaceTimeSynch":
+                zombieErratic -= direction;
+            break;
+        }
+    }
+    
+    /*$('body').on("click", function() {
+        console.log("X: "+mouseX.toString()+", Y: "+mouseY.toString()); 
+    });*/
+    
+</script>
+</html>
