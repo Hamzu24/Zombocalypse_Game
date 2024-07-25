@@ -30,6 +30,7 @@
     </ol>
     <div id="reloadingBanner" class="gameStuff">Reloading</div>
     <div id="waveOverBanner" class="gameStuff"><span id="waveOverTitle">Wave Complete</span><br/><span id="coinsEarnedTitle">0 Coin Bonus</span><br/>Click to continue</div>
+    <div id="testingFloorSideBar" class="testingStuff"></div>
     <h2 id="bulletP" class="gameStuff">Bullets: 6</h2>
     <h2 id="roundP" class="gameStuff">Round: 1</h2>
     <h2 id="healthP" class="gameStuff">Health: 100%</h2>
@@ -93,6 +94,15 @@
     <button id="exitB" class="buttons" onclick="menu()">Exit</button>
     <h1 id="deathTitle">You Died!</h1>
     <style>
+        #testingFloorSideBar {
+            background-color: lightgray;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 200px;
+            height: 100%;
+        }
+
         .challengeListElements:hover {
             color: darkred;
         }
@@ -1623,10 +1633,22 @@
     $("#clearScreenB").mouseleave(function() {
        mouseOverButton -= 1; 
     });
+    $("#equipmentOptions").mouseenter(function() {
+        mouseOverButton += 1;   
+    });
+    $("#equipmentOptions").mouseleave(function() {
+       mouseOverButton -= 1; 
+    });
     $("#waveOverBanner").mouseenter(function() {
         mouseOverButton += 1;   
     });
     $("#waveOverBanner").mouseleave(function() {
+       mouseOverButton -= 1; 
+    });
+    $("#testingFloorSideBar").mouseenter(function() {
+        mouseOverButton += 1;   
+    });
+    $("#testingFloorSideBar").mouseleave(function() {
        mouseOverButton -= 1; 
     });
     
